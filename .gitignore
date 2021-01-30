@@ -1,6 +1,6 @@
 
-# Created by https://www.toptal.com/developers/gitignore/api/macos,windows,android,androidstudio
-# Edit at https://www.toptal.com/developers/gitignore?templates=macos,windows,android,androidstudio
+# Created by https://www.toptal.com/developers/gitignore/api/android,androidstudio,macos,windows,linux
+# Edit at https://www.toptal.com/developers/gitignore?templates=android,androidstudio,macos,windows,linux
 
 ### Android ###
 # Built application files
@@ -96,6 +96,21 @@ output.json
 # Replacement of .externalNativeBuild directories introduced
 # with Android Studio 3.5.
 
+### Linux ###
+*~
+
+# temporary files which can be created if a process still has a handle open of a deleted file
+.fuse_hidden*
+
+# KDE directory preferences
+.directory
+
+# Linux trash folder which might appear on any partition or disk
+.Trash-*
+
+# .nfs files are created when an open file is removed but is still being accessed
+.nfs*
+
 ### macOS ###
 # General
 .DS_Store
@@ -139,7 +154,7 @@ ehthumbs_vista.db
 [Dd]esktop.ini
 
 # Recycle Bin used on file shares
-.BIN/
+$RECYCLE.BIN/
 
 # Windows Installer files
 *.cab
@@ -181,7 +196,6 @@ ehthumbs_vista.db
 /*/*/build
 /*/*/production
 *.ipr
-*~
 *.swp
 
 # Keystore files
@@ -261,4 +275,4 @@ fabric.properties
 
 !/gradle/wrapper/gradle-wrapper.jar
 
-# End of https://www.toptal.com/developers/gitignore/api/macos,windows,android,atudio
+# End of https://www.toptal.com/developers/gitignore/api/android,androidstudio,macos,windows,linux
