@@ -14,6 +14,9 @@
     <string name="MenuSearchBtn">Search Jobs</string>
     <string name="RecommendBtn">Recommended Jobs</string>
     <string name="EditAccBtn">Edit Account</string>
+    <string name="AdminMenuTitle">Admin</string>
+    <string name="AdminUsersBtn">Users</string>
+    <string name="AdminAddJobBtn">Add Jobs</string>
 
 
 </resources>
