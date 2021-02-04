@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
-        android:text="Main Menu"
+        android:text="@string/UserMenuTitle"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -19,32 +19,32 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/SearchBtn"
+        android:id="@+id/MenuSearchBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
-        android:text="Search Jobs"
+        android:text="@string/MenuSearchBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/UserMenuTitle" />
 
     <Button
-        android:id="@+id/ReccomendBtn"
+        android:id="@+id/RecommendBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
-        android:text="Reccomended Jobs"
+        android:text="@string/RecommendBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/SearchBtn" />
+        app:layout_constraintTop_toBottomOf="@+id/MenuSearchBtn" />
 
     <Button
         android:id="@+id/EditAccBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
-        android:text="Edit Account"
+        android:text="@string/EditAccBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ReccomendBtn" />
+        app:layout_constraintTop_toBottomOf="@+id/RecommendBtn" />
 </androidx.constraintlayout.widget.ConstraintLayout>

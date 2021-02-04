@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">Project1</string>
+
+    <!--Main Activity-->
+    <string name="MainTitle">Job Search</string>
+    <string name="MainUsernameET">Username</string>
+    <string name="MainPasswordET">Password</string>
+    <string name="LogInBtn">Log In</string>
+    <string name="NotRegText">Not Registered?</string>
+    <string name="CreateAccBtn">Create an Account</string>
+
+    <!--User Main Menu-->
+    <string name="UserMenuTitle">Main Menu</string>
+    <string name="MenuSearchBtn">Search Jobs</string>
+    <string name="RecommendBtn">Recommended Jobs</string>
+    <string name="EditAccBtn">Edit Account</string>
+
+
 </resources>
