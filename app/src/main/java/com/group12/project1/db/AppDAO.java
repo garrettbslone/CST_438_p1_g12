@@ -6,7 +6,6 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.group12.project1.Job;
 import com.group12.project1.User;
 
 import java.util.List;
@@ -31,15 +30,4 @@ public interface AppDAO {
     @Query("SELECT * FROM "+ AppDatabase.USER_TABLE + " WHERE mUserId =:userId")
     User getUserByUserId(int userId);
 
-    @Insert
-    void insert(Job... jobs);
-
-    @Delete
-    void delete(Job job);
-
-    @Query("SELECT * FROM " + AppDatabase.JOBS_TABLE + " WHERE mUserId =:userId")
-    List<Job> getSavedJobs(int userId);
-
-    @Query("SELECT * FROM " + AppDatabase.JOBS_TABLE + " WHERE mUserId =:userId AND mId =:Id")
-    Job getJobIfSaved(int userId, String Id );
 }
