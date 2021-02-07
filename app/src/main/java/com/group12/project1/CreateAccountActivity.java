@@ -8,10 +8,14 @@ package com.group12.project1;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.group12.project1.db.AppDAO;
 
 import java.util.regex.Pattern;
 
@@ -33,6 +37,8 @@ public class CreateAccountActivity extends AppCompatActivity {
     private EditText mConfPasswordET;
     private Button mCreateBTN;
 
+    private AppDAO mAppDAO;
+
     @Override
     protected void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +48,8 @@ public class CreateAccountActivity extends AppCompatActivity {
         mPasswordET = findViewById(R.id.CreateAccPasswordET);
         mConfPasswordET = findViewById(R.id.CreateAccConfPasswordET);
         mCreateBTN = findViewById(R.id.CreateAccCreateBTN);
+
+        mAppDAO = Util.getDAO(this);
 
         mCreateBTN.setOnClickListener(v -> {
             String username = mUsernameET.getText().toString().trim();
@@ -66,8 +74,13 @@ public class CreateAccountActivity extends AppCompatActivity {
                 mConfPasswordET.setBackgroundColor(Color.WHITE);
             }
 
-            if (!createAccount(username, password)) {
-                Util.toastMaker(getApplicationContext(), "Error: Account could not be created\n").show();
+            String err;
+            if ((err = createAccount(username, password)) != null) {
+                Util.toastMaker(getApplicationContext(), err).show();
+            } else {
+                Util.toastMaker(getApplicationContext(), "account created!").show();
+
+                // TODO: launch the landing page activity
             }
         });
     }
@@ -97,9 +110,18 @@ public class CreateAccountActivity extends AppCompatActivity {
      * @return         a boolean representing if the account was created and
      *                 its information is stored
      */
-    public static boolean createAccount(String username, String password) {
-        // once the db gets merged to master, check that the username isn't taken
-        // and try to add the user
-        return true;
+    public String createAccount(String username, String password) {
+        User user = new User(username, password, false);
+        return user.addToDB(mAppDAO);
+    }
+
+    /**
+     * Factory pattern provided Intent to switch to this activity.
+     * @param ctx the Context to switch from
+     * @return    the Intent to switch to this activity
+     */
+    public static Intent intentFactory(Context ctx) {
+        Intent intent = new Intent(ctx, CreateAccountActivity.class);
+        return intent;
     }
 }
