@@ -1,14 +1,14 @@
 package com.group12.project1;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-import androidx.room.TypeConverter;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import com.group12.project1.db.AppDAO;
 import com.group12.project1.db.AppDatabase;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * UserPOJO
@@ -17,8 +17,8 @@ import java.util.List;
  */
 @Entity(tableName = AppDatabase.USER_TABLE)
 public class User {
-    @PrimaryKey (autoGenerate = true)
-    private int mUserId;
+    @PrimaryKey ()
+    @NonNull
     private String mUsername;
     private String mPassword;
     private boolean mAdmin;
@@ -36,14 +36,6 @@ public class User {
 
     public void setSavedJobs(List<String> savedJobs) {
         this.savedJobs = savedJobs;
-    }
-
-    public int getUserId() {
-        return mUserId;
-    }
-
-    public void setUserId(int mUserId) {
-        this.mUserId = mUserId;
     }
 
     public String getUsername() {
@@ -70,4 +62,36 @@ public class User {
         this.mAdmin = mAdmin;
     }
 
+    /**
+     * Add the user to the database.
+     * @param dao the dao to access the RoomDB
+     * @return    on error, a String containing the corresponding message is returned,
+     *            on success, null is returned
+     */
+    public String addToDB(AppDAO dao) {
+        if (dao.getUserByUsername(this.mUsername) != null) {
+            return "Username '" + this.mUsername + "' already exists!";
+        }
+
+        dao.insert(this);
+
+        if (dao.getUserByUsername(this.mUsername) == null) {
+            return "Error: Account could not be created!";
+        }
+
+        return null;
+    }
+
+    @Override
+    public boolean equals (Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(mUsername, user.mUsername);
+    }
+
+    @Override
+    public int hashCode () {
+        return Objects.hash(mUsername);
+    }
 }

@@ -2,11 +2,8 @@ package com.group12.project1.db;
 
 import androidx.room.Database;
 import androidx.room.RoomDatabase;
-import androidx.room.TypeConverter;
 import androidx.room.TypeConverters;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.group12.project1.Converters;
 import com.group12.project1.User;
 
