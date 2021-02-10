@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.SearchView;
+import androidx.appcompat.widget.SearchView;
 import android.widget.Toast;
 
 import com.group12.project1.db.AppDAO;
@@ -43,7 +43,7 @@ public class EditUsersActivity extends AppCompatActivity {
     }
 
     public void wireDisplay() {
-
+        mAppDAO = Util.getDAO(this);
         mUsers = mAppDAO.getAllUsers();
         getNames();
         mSearchView = findViewById(R.id.search_bar);

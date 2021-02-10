@@ -14,7 +14,7 @@ public class AdminActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
-
+        wireDisplay();
 
     }
     public void wireDisplay(){
@@ -22,7 +22,7 @@ public class AdminActivity extends AppCompatActivity {
         mEditUsersBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(EditUsersActivity.intentFactory(getApplicationContext()));
             }
         });
     }
