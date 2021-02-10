@@ -17,4 +17,26 @@
 
     <!--Create Account-->
     <string name="confirm_password_str">Confirm Password</string>
+
+    <!--Edit Account-->
+    <string name="lang_str">Language</string>
+    <string name="loc_str">Location</string>
+    <string name="full_time_str">Full Time</string>
+    <string name="yes_str">Yes</string>
+    <string name="no_str">No</string>
+    <string name="save_str">Save</string>
+    <string-array name="langs_arr">
+        <item>python</item>
+        <item>java</item>
+        <item>ruby</item>
+        <item>js</item>
+        <item>node</item>
+        <item>c</item>
+        <item>c#</item>
+        <item>php</item>
+        <item>lua</item>
+        <item>julia</item>
+        <item>fortran</item>
+        <item>cobol</item>
+    </string-array>
 </resources>

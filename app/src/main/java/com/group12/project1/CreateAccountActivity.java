@@ -32,10 +32,10 @@ public class CreateAccountActivity extends AppCompatActivity {
             "{5,29}" +   // between 6 and 30 characters long
             "$");        // end of string
 
-    private EditText mUsernameET;
-    private EditText mPasswordET;
-    private EditText mConfPasswordET;
-    private Button mCreateBTN;
+    private EditText mUsernameEt;
+    private EditText mPasswordEt;
+    private EditText mConfPasswordEt;
+    private Button mCreateBtn;
 
     private AppDAO mAppDAO;
 
@@ -44,42 +44,44 @@ public class CreateAccountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
 
-        mUsernameET = findViewById(R.id.CreateAccUsernameET);
-        mPasswordET = findViewById(R.id.CreateAccPasswordET);
-        mConfPasswordET = findViewById(R.id.CreateAccConfPasswordET);
-        mCreateBTN = findViewById(R.id.CreateAccCreateBTN);
+        mUsernameEt = findViewById(R.id.CreateAccUsernameET);
+        mPasswordEt = findViewById(R.id.CreateAccPasswordET);
+        mConfPasswordEt = findViewById(R.id.CreateAccConfPasswordET);
+        mCreateBtn = findViewById(R.id.CreateAccCreateBTN);
 
         mAppDAO = Util.getDAO(this);
 
-        mCreateBTN.setOnClickListener(v -> {
-            String username = mUsernameET.getText().toString().trim();
-            String password = mPasswordET.getText().toString().trim();
-            String confPassword = mConfPasswordET.getText().toString().trim();
+        mCreateBtn.setOnClickListener(v -> {
+            String username = mUsernameEt.getText().toString().trim();
+            String password = mPasswordEt.getText().toString().trim();
+            String confPassword = mConfPasswordEt.getText().toString().trim();
 
             if (!usernameIsValid(username)) {
-                mUsernameET.setBackgroundColor(Color.RED);
+                mUsernameEt.setBackgroundColor(Color.RED);
             } else  {
-                mUsernameET.setBackgroundColor(Color.WHITE);
+                mUsernameEt.setBackgroundColor(Color.WHITE);
             }
 
             if (!passwordIsValid(password)) {
-                mPasswordET.setBackgroundColor(Color.RED);
+                mPasswordEt.setBackgroundColor(Color.RED);
             } else  {
-                mPasswordET.setBackgroundColor(Color.WHITE);
+                mPasswordEt.setBackgroundColor(Color.WHITE);
             }
 
             if (!password.equals(confPassword)) {
-                mConfPasswordET.setBackgroundColor(Color.RED);
+                mConfPasswordEt.setBackgroundColor(Color.RED);
             } else  {
-                mConfPasswordET.setBackgroundColor(Color.WHITE);
+                mConfPasswordEt.setBackgroundColor(Color.WHITE);
             }
 
-            String err;
-            if ((err = createAccount(username, password)) != null) {
-                Util.toastMaker(getApplicationContext(), err).show();
+            User user;
+            if ((user = createAccount(username, password)) == null) {
+                Util.toastMaker(getApplicationContext(), "account not created!").show();
             } else {
-                Util.toastMaker(getApplicationContext(), "account created!").show();
-                startActivity(UserMainMenuActivity.intentFactory(getApplicationContext()));
+                user.signInUser();
+
+                // once the account is created they will need to set search preferences
+                startActivity(EditAccountActivity.intentFactory(getApplicationContext()));
             }
         });
     }
@@ -109,9 +111,9 @@ public class CreateAccountActivity extends AppCompatActivity {
      * @return         a boolean representing if the account was created and
      *                 its information is stored
      */
-    public String createAccount(String username, String password) {
+    public User createAccount(String username, String password) {
         User user = new User(username, password, false);
-        return user.addToDB(mAppDAO);
+        return user.addToDB(mAppDAO, getApplicationContext());
     }
 
     /**

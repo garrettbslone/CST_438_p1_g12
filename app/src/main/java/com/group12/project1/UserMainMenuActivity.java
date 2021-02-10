@@ -9,6 +9,7 @@ import android.widget.Button;
 
 public class UserMainMenuActivity extends AppCompatActivity {
     private Button mMenuSearchBtn;
+    private Button mEditAccBtn;
 
     @Override
     protected void onCreate (Bundle savedInstanceState) {
@@ -16,9 +17,14 @@ public class UserMainMenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_main_menu);
 
         mMenuSearchBtn = findViewById(R.id.MenuSearchBtn);
+        mEditAccBtn = findViewById(R.id.EditAccBtn);
 
         mMenuSearchBtn.setOnClickListener(v -> {
             startActivity(JobSearchActivity.intentFactory(getApplicationContext()));
+        });
+
+        mEditAccBtn.setOnClickListener(v -> {
+            startActivity(EditAccountActivity.intentFactory(getApplicationContext()));
         });
     }
 
