@@ -79,8 +79,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                 Util.toastMaker(getApplicationContext(), err).show();
             } else {
                 Util.toastMaker(getApplicationContext(), "account created!").show();
-
-                // TODO: launch the landing page activity
+                startActivity(UserMainMenuActivity.intentFactory(getApplicationContext()));
             }
         });
     }
