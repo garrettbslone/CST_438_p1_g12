@@ -15,6 +15,8 @@
     <string name="RecommendBtn">Recommended Jobs</string>
     <string name="EditAccBtn">Edit Account</string>
 
-	<!--Create Account-->
+    <!--Create Account-->
     <string name="confirm_password_str">Confirm Password</string>
+    <string name="admin">Admin</string>
+    <string name="view_edit_users">View/Edit Users</string>
 </resources>
