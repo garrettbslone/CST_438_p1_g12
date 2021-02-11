@@ -12,8 +12,6 @@ public class UserMainMenu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_main_menu);
 
-        Intent intent = getIntent();
-        final int userId = Integer.parseInt(intent.getStringExtra("userId"));
-        String username = intent.getStringExtra("username");
+
     }
 }
