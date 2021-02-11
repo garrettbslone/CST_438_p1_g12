@@ -18,5 +18,11 @@
     <string name="AdminUsersBtn">Users</string>
     <string name="AdminAddJobBtn">Add Jobs</string>
 
+    <!--Recommended Jobs -->
+    <string name="recommended_jobs_title">Recommended Jobs</string>
+    <string name="SearchBtn">Search</string>
+    <string name="SearchET">Search Jobs</string>
+    <string name="SearchJobsTitle">Search Jobs</string>
+
 
 </resources>

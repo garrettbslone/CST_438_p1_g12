@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Project1">
-        <activity android:name=".AdminMainMenu"></activity>
+        <activity android:name=".UserEditAccount"></activity>
+        <activity android:name=".RecommendedJobs" />
+        <activity android:name=".SearchJobs" />
+        <activity android:name=".UserMainMenu"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
