@@ -14,4 +14,18 @@ public class ExampleUnitTest {
     public void addition_isCorrect () {
         assertEquals(4, 2 + 2);
     }
+
+    @Test
+    public void user_test(){
+        User user = new User("testuser", "testuser", true);
+        assertEquals(user.getPassword(), "testuser");
+        assertEquals(user.getUsername(), "testuser");
+        assertTrue(user.isAdmin());
+        user.setAdmin(false);
+        user.setPassword("TestUser");
+        user.setUsername("TestUser");
+        assertNotEquals(user.getPassword(), "testuser");
+        assertNotEquals(user.getUsername(), "testuser");
+        assertFalse(user.isAdmin());
+    }
 }

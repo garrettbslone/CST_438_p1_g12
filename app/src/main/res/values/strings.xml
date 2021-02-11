@@ -24,5 +24,6 @@
     <string name="SearchET">Search Jobs</string>
     <string name="SearchJobsTitle">Search Jobs</string>
 
-
+    <!--Create Account-->
+    <string name="confirm_password_str">Confirm Password</string>
 </resources>
