@@ -15,5 +15,5 @@ public interface GitHubJobsAPI {
     Call<List<Job>> searchJobs(@QueryMap Map<String, String> params);
 
     @GET("positions/{id}.json")
-    Call<List<Job>> getJob(@Path("id") String id);
+    Call<Job> getJob(@Path("id") String id);
 }

@@ -88,22 +88,17 @@ public class EditUsersActivity extends AppCompatActivity {
                             }
                         });
                 AlertDialog alert = builder.create();
-
                 alert.setTitle(user.getUsername());
                 alert.show();
 //                Toast.makeText(ActivitySearch.this, "You clicked on -" + adapterView.getItemAtPosition(i).toString(), Toast.LENGTH_SHORT).show();
             }
         });
-
-        /**
-         * Factory pattern provided Intent to switch to this activity.
-         * @param ctx the Context to switch from
-         * @return the Intent to switch to this activity
-         */
-
-
     }
-
+    /**
+     * Factory pattern provided Intent to switch to this activity.
+     * @param ctx the Context to switch from
+     * @return the Intent to switch to this activity
+     */
     public static Intent intentFactory(Context ctx) {
         Intent intent = new Intent(ctx, EditUsersActivity.class);
         return intent;
