@@ -92,12 +92,6 @@ public class AdminSavedJobsActivity extends AppCompatActivity {
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     dialogInterface.cancel();
                                 }
-                            })
-                            .setNegativeButton("Delete User", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    dialogInterface.cancel();
-                                }
                             });
                     AlertDialog alert = builder.create();
                     alert.setTitle(name);

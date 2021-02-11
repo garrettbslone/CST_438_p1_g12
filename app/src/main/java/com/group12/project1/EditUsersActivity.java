@@ -90,7 +90,6 @@ public class EditUsersActivity extends AppCompatActivity {
                 AlertDialog alert = builder.create();
                 alert.setTitle(user.getUsername());
                 alert.show();
-//                Toast.makeText(ActivitySearch.this, "You clicked on -" + adapterView.getItemAtPosition(i).toString(), Toast.LENGTH_SHORT).show();
             }
         });
     }
