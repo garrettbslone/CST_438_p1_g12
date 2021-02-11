@@ -8,6 +8,8 @@ package com.group12.project1;
 
 import org.junit.Test;
 
+import java.util.HashMap;
+
 import static org.junit.Assert.*;
 
 /**
@@ -64,6 +66,13 @@ public class UnitTests {
         user.setPrefs(prefs);
 
         assertEquals(new SearchPreferences("lang", "loc", true), user.getPrefs());
+
+        HashMap<String, String> qMap = new HashMap<>();
+        qMap.put("description", "lang");
+        qMap.put("location", "loc");
+        qMap.put("full_time", "true");
+
+        assertEquals(qMap, user.getPrefs().toQueryMap());
     }
 
 }

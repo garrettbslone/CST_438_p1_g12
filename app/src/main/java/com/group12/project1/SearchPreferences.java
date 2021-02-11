@@ -6,6 +6,7 @@
  */
 package com.group12.project1;
 
+import java.util.HashMap;
 import java.util.Objects;
 
 /**
@@ -15,7 +16,7 @@ import java.util.Objects;
 public class SearchPreferences {
     private String mLang;
     private String mLoc;
-    private boolean mIsFullTime;
+    private Boolean mIsFullTime;
 
     public SearchPreferences (String lang, String loc, boolean time) {
         mLang = lang;
@@ -45,6 +46,21 @@ public class SearchPreferences {
 
     public void setFullTime (boolean fullTime) {
         mIsFullTime = fullTime;
+    }
+
+    /**
+     * Turns the SearchPreferences object into the proper QueryMap
+     * needed for the API.
+     * @return qMap a HashMap containing the parameters to add to the query string
+     */
+    public HashMap<String, String> toQueryMap() {
+        HashMap<String, String> qMap = new HashMap<>();
+
+        qMap.put("description", mLang);
+        qMap.put("location", mLoc);
+        qMap.put("full_time", mIsFullTime.toString());
+
+        return qMap;
     }
 
     @Override
