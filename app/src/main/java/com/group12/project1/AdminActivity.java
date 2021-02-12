@@ -101,7 +101,6 @@ public class AdminActivity extends AppCompatActivity {
                         return;
                     }
                     Job job = response.body();
-                    Toast.makeText(getApplicationContext(), job.getCompany(), Toast.LENGTH_SHORT).show();
                     jobs.add(job);
                 }
 
