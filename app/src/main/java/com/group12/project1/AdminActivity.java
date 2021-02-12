@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.group12.project1.db.AppDAO;
 
@@ -29,11 +30,14 @@ public class AdminActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
-        wireDisplay();
 
         //To be deleted
         test();
         //
+
+        wireDisplay();
+
+
 
     }
     public void wireDisplay(){
@@ -97,6 +101,7 @@ public class AdminActivity extends AppCompatActivity {
                         return;
                     }
                     Job job = response.body();
+                    Toast.makeText(getApplicationContext(), job.getCompany(), Toast.LENGTH_SHORT).show();
                     jobs.add(job);
                 }
 
@@ -120,7 +125,7 @@ public class AdminActivity extends AppCompatActivity {
 
     //TO BE DELETED
     public void test(){
-
+        mAppDAO = Util.getDAO(this);
         User testuser = new User("waterfall", "waterfall", true);
         User testuser2 = new User("success", "success", true);
         User testuser3 = new User("bob", "bob", false);
