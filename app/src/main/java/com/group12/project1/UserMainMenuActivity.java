@@ -10,6 +10,10 @@ import android.widget.Button;
 public class UserMainMenuActivity extends AppCompatActivity {
     private Button mMenuSearchBtn;
 
+    private Button mRecommendedBtn;
+
+    private Button mEditAccount;
+
     @Override
     protected void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,6 +23,20 @@ public class UserMainMenuActivity extends AppCompatActivity {
 
         mMenuSearchBtn.setOnClickListener(v -> {
             startActivity(JobSearchActivity.intentFactory(getApplicationContext()));
+        });
+
+        mRecommendedBtn = findViewById(R.id.RecommendBtn);
+
+        mRecommendedBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(UserMainMenuActivity.this, RecommendedJobsActivity.class);
+            startActivity(intent);
+        });
+
+        mEditAccount = findViewById(R.id.EditAccBtn);
+
+        mEditAccount.setOnClickListener(v -> {
+            Intent intent = new Intent(UserMainMenuActivity.this, UserEditAccountActivity.class);
+            startActivity(intent);
         });
     }
 
