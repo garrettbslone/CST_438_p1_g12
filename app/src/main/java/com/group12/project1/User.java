@@ -1,5 +1,7 @@
 package com.group12.project1;
 
+import android.content.Context;
+
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -17,17 +19,22 @@ import java.util.Objects;
  */
 @Entity(tableName = AppDatabase.USER_TABLE)
 public class User {
+    // To be used to access the user and their preferences when needed.
+    private static User sSignedInUser;
+
     @PrimaryKey ()
     @NonNull
     private String mUsername;
     private String mPassword;
     private boolean mAdmin;
+    private SearchPreferences mPrefs;
     private List<String> savedJobs;
 
     public User(String mUsername, String mPassword, boolean mAdmin) {
         this.mUsername = mUsername;
         this.mPassword = mPassword;
         this.mAdmin = mAdmin;
+        this.mPrefs = null;
     }
 
     public List<String> getSavedJobs() {
@@ -54,6 +61,14 @@ public class User {
         this.mPassword = mPassword;
     }
 
+    public SearchPreferences getPrefs () {
+        return mPrefs;
+    }
+
+    public void setPrefs (SearchPreferences prefs) {
+        mPrefs = prefs;
+    }
+
     public boolean isAdmin() {
         return mAdmin;
     }
@@ -63,23 +78,47 @@ public class User {
     }
 
     /**
+     * Sign in the current User object (for use throughout the app).
+     */
+    public void signInUser() {
+        User.sSignedInUser = this;
+    }
+
+    /**
+     * Sign out the current User object (for use throughout the app).
+     */
+    public void signOutUser() {
+        User.sSignedInUser = null;
+    }
+
+    /**
+     * Get the currently signed in User (for use throughout the app).
+     * @return the User that is currently signed in
+     */
+    public static User getSignedInUser () {
+        return User.sSignedInUser;
+    }
+
+    /**
      * Add the user to the database.
      * @param dao the dao to access the RoomDB
-     * @return    on error, a String containing the corresponding message is returned,
-     *            on success, null is returned
+     * @return    on success the current User object is returned,
+     *            on failure null is returned
      */
-    public String addToDB(AppDAO dao) {
+    public User addToDB(AppDAO dao, Context ctx) {
         if (dao.getUserByUsername(this.mUsername) != null) {
-            return "Username '" + this.mUsername + "' already exists!";
+            Util.toastMaker(ctx, "Username '" + this.mUsername + "' already exists!");
+            return null;
         }
 
         dao.insert(this);
 
         if (dao.getUserByUsername(this.mUsername) == null) {
-            return "Error: Account could not be created!";
+            Util.toastMaker(ctx, "Error: Account could not be created!");
+            return null;
         }
 
-        return null;
+        return this;
     }
 
     @Override

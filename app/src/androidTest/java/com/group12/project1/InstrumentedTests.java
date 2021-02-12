@@ -41,11 +41,11 @@ public class InstrumentedTests {
 
         // test that user can be stored
         dao.delete(user);
-        assertNull(user.addToDB(dao));
+        assertNull(user.addToDB(dao, appContext));
         assertEquals(user, dao.getUserByUsername(user.getUsername()));
 
         // test that duplicates can't be added
-        assertNotNull(user.addToDB(dao));
+        assertNotNull(user.addToDB(dao, appContext));
     }
 
     @Test
