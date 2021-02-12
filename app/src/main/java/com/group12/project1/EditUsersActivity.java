@@ -11,7 +11,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
 import androidx.appcompat.widget.SearchView;
+
 import android.widget.Toast;
 
 import com.group12.project1.db.AppDAO;
@@ -26,20 +28,11 @@ public class EditUsersActivity extends AppCompatActivity {
     private ListView mListView;
     private ArrayAdapter<String> mArrayAdapter;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_users);
         wireDisplay();
-    }
-
-    private void getNames() {
-        mNamesArr = new String[mUsers.size()];
-
-        for (int i = 0; i < mUsers.size(); i++) {
-            mNamesArr[i] = mUsers.get(i).getUsername();
-        }
     }
 
     public void wireDisplay() {
@@ -93,13 +86,25 @@ public class EditUsersActivity extends AppCompatActivity {
             }
         });
     }
+
     /**
      * Factory pattern provided Intent to switch to this activity.
+     *
      * @param ctx the Context to switch from
      * @return the Intent to switch to this activity
      */
     public static Intent intentFactory(Context ctx) {
         Intent intent = new Intent(ctx, EditUsersActivity.class);
         return intent;
+    }
+
+    /**
+     * Populates array with users'l usernames.
+     */
+    private void getNames() {
+        mNamesArr = new String[mUsers.size()];
+        for (int i = 0; i < mUsers.size(); i++) {
+            mNamesArr[i] = mUsers.get(i).getUsername();
+        }
     }
 }
