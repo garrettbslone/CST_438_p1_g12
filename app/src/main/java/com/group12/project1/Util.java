@@ -23,9 +23,10 @@ public class Util {
 
     /**
      * Returns a text Toast object for the context being passed in.
+     *
      * @param ctx the context that this method is being called from
      * @param str the message to be displayed in the Toast
-     * @return    the Toast object with str message ready to be displayed centered in ctx
+     * @return the Toast object with str message ready to be displayed centered in ctx
      */
     public static Toast toastMaker(Context ctx, String str) {
         Toast toast = Toast.makeText(ctx, str, Toast.LENGTH_LONG);
@@ -35,8 +36,9 @@ public class Util {
 
     /**
      * Build the RoomDB and reutrn the associated dao.
+     *
      * @param ctx the Context we are being called from
-     * @return    the AppDAO ready for queries
+     * @return the AppDAO ready for queries
      */
     public static AppDAO getDAO(Context ctx) {
         return Room.databaseBuilder(ctx, AppDatabase.class, AppDatabase.DB_NAME)
@@ -48,6 +50,7 @@ public class Util {
     /**
      * Get the Retrofit API wrapper singleton object,
      * and create it if it doesn't exist.
+     *
      * @return the GitHubJobsAPI interface ready to make calls
      */
     public static GitHubJobsAPI getAPI() {

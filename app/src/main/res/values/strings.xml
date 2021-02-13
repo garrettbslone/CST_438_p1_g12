@@ -17,6 +17,11 @@
 
     <!--Create Account-->
     <string name="confirm_password_str">Confirm Password</string>
+  
+    <!--Admin-->
+    <string name="admin">Admin</string>
+    <string name="view_edit_users">View/Edit Users</string>
+    <string name="view_saved_jobs">View Saved Jobs</string>
 
     <!--Edit Account-->
     <string name="lang_str">Language</string>

@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
 
+import com.group12.project1.db.AppDAO;
+
 public class MainActivity extends AppCompatActivity {
     private Button mCreateAccBtn;
 
