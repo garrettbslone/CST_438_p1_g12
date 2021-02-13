@@ -14,14 +14,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //delete this
-        AppDAO appDAO = Util.getDAO(this);
 
-        if(appDAO.getAllUsers().size()==0){
-            appDAO.insert(new User("testuser","testuser", false), new User("admin", "admin", true));
-        }
-        startActivity(AdminActivity.intentFactory(this));
-        // delete
         mCreateAccBtn = findViewById(R.id.CreateAccBtn);
 
         mCreateAccBtn.setOnClickListener(v -> {
