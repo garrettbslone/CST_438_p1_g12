@@ -12,6 +12,10 @@
         <activity android:name=".CreateAccountActivity" />
         <activity android:name=".AdminActivity" />
         <activity android:name=".EditUsersActivity" />
+        <activity android:name=".JobSearchActivity" />
+        <activity android:name=".UserMainMenuActivity" />
+        <activity android:name=".CreateAccountActivity" />
+        <activity android:name=".EditAccountActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

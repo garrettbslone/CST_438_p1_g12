@@ -8,6 +8,8 @@ package com.group12.project1;
 
 import org.junit.Test;
 
+import java.util.HashMap;
+
 import static org.junit.Assert.*;
 
 /**
@@ -15,9 +17,9 @@ import static org.junit.Assert.*;
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
-public class CreateAccountTests {
+public class UnitTests {
     @Test
-    public void username_is_valid() {
+    public void usernameIsValid() {
         String bad1 = " badusername11";
         String bad2 = "2bad";
         String bad3 = "## _#EFFE3_";
@@ -36,7 +38,7 @@ public class CreateAccountTests {
     }
 
     @Test
-    public void password_is_valid() {
+    public void passwordIsValid() {
         String bad1 = "bad password";
         String bad2 = "2bad";
         String bad3 = "## _#_";
@@ -52,6 +54,25 @@ public class CreateAccountTests {
         assertTrue(CreateAccountActivity.passwordIsValid(good1));
         assertTrue(CreateAccountActivity.passwordIsValid(good2));
         assertTrue(CreateAccountActivity.passwordIsValid(good3));
+    }
+
+    @Test
+    public void changeUserPrefs() {
+        User user = new User("user", "pass", false);
+
+        assertNull(user.getPrefs());
+
+        SearchPreferences prefs = new SearchPreferences("lang", "loc", true);
+        user.setPrefs(prefs);
+
+        assertEquals(new SearchPreferences("lang", "loc", true), user.getPrefs());
+
+        HashMap<String, String> qMap = new HashMap<>();
+        qMap.put("description", "lang");
+        qMap.put("location", "loc");
+        qMap.put("full_time", "true");
+
+        assertEquals(qMap, user.getPrefs().toQueryMap());
     }
 
 }
