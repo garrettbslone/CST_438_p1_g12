@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +15,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
+
+import com.group12.project1.db.AppDAO;
 
 public class EditAccountActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private static final String BASE_MSG = "Edit Account \n";
@@ -41,7 +44,12 @@ public class EditAccountActivity extends AppCompatActivity implements AdapterVie
         mSaveBtn = findViewById(R.id.EditAccSaveBtn);
 
         mLangsArr = getResources().getStringArray(R.array.langs_arr);
-        User user = User.getSignedInUser();
+
+        // get the signed in User object
+        SharedPreferences sharedPrefs = getSharedPreferences(User.PREFS_TBL_NAME, Context.MODE_PRIVATE);
+        AppDAO dao = Util.getDAO(getApplicationContext());
+
+        User user = User.getSignedInUser(sharedPrefs, dao);
 
         if (user == null) {
             mNameTv.setText("Error: couldn't get user details");

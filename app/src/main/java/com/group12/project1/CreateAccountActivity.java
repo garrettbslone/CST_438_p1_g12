@@ -8,8 +8,10 @@ package com.group12.project1;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.Button;
@@ -39,6 +41,7 @@ public class CreateAccountActivity extends AppCompatActivity {
 
     private AppDAO mAppDAO;
 
+    @SuppressLint ("CommitPrefEdits")
     @Override
     protected void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,9 +79,12 @@ public class CreateAccountActivity extends AppCompatActivity {
 
             User user;
             if ((user = createAccount(username, password)) == null) {
-                Util.toastMaker(getApplicationContext(), "account not created!").show();
+                Util.toastMaker(getApplicationContext(), "Account not created! Username: " +
+                        username + " already exists!").show();
             } else {
-                user.signInUser();
+                SharedPreferences sharedPrefs =
+                        getSharedPreferences(User.PREFS_TBL_NAME, Context.MODE_PRIVATE);
+                user.signIn(sharedPrefs.edit());
 
                 // once the account is created they will need to set search preferences
                 startActivity(EditAccountActivity.intentFactory(getApplicationContext()));
@@ -113,7 +119,7 @@ public class CreateAccountActivity extends AppCompatActivity {
      */
     public User createAccount(String username, String password) {
         User user = new User(username, password, false);
-        return user.addToDB(mAppDAO, getApplicationContext());
+        return user.addToDB(mAppDAO);
     }
 
     /**

@@ -1,9 +1,12 @@
 package com.group12.project1;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.group12.project1.db.AppDAO;
@@ -20,7 +23,14 @@ import java.util.Objects;
 @Entity(tableName = AppDatabase.USER_TABLE)
 public class User {
     // To be used to access the user and their preferences when needed.
-    private static User sSignedInUser;
+    @Ignore
+    private static User sSignedInUser = null;
+
+    // SharedPreferences constants
+    @Ignore
+    public static final String PREFS_TBL_NAME = "github_job_prefs";
+    @Ignore
+    public static final String PREFS_UNAME = "uname";
 
     @PrimaryKey ()
     @NonNull
@@ -80,22 +90,33 @@ public class User {
     /**
      * Sign in the current User object (for use throughout the app).
      */
-    public void signInUser() {
+    public void signIn (SharedPreferences.Editor prefEdit) {
         User.sSignedInUser = this;
+
+        prefEdit.putString(User.PREFS_UNAME, this.mUsername);
+        prefEdit.apply();
     }
 
     /**
      * Sign out the current User object (for use throughout the app).
      */
-    public void signOutUser() {
+    public void signOut (SharedPreferences.Editor prefEdit) {
         User.sSignedInUser = null;
+
+        prefEdit.remove(User.PREFS_UNAME);
+        prefEdit.apply();
     }
 
     /**
      * Get the currently signed in User (for use throughout the app).
      * @return the User that is currently signed in
      */
-    public static User getSignedInUser () {
+    public static User getSignedInUser (SharedPreferences sharedPrefs, AppDAO dao) {
+        if (User.sSignedInUser == null) {
+             String username = sharedPrefs.getString(User.PREFS_UNAME, "");
+             User.sSignedInUser = !username.isEmpty() ? dao.getUserByUsername(username) : null;
+        }
+
         return User.sSignedInUser;
     }
 
@@ -105,16 +126,16 @@ public class User {
      * @return    on success the current User object is returned,
      *            on failure null is returned
      */
-    public User addToDB(AppDAO dao, Context ctx) {
+    public User addToDB(AppDAO dao) {
         if (dao.getUserByUsername(this.mUsername) != null) {
-            Util.toastMaker(ctx, "Username '" + this.mUsername + "' already exists!");
+            Log.e("Create Account", "Username '" + this.mUsername + "' already exists!");
             return null;
         }
 
         dao.insert(this);
 
         if (dao.getUserByUsername(this.mUsername) == null) {
-            Util.toastMaker(ctx, "Error: Account could not be created!");
+            Log.e("Create Account", "Error: Account could not be created!");
             return null;
         }
 
@@ -132,5 +153,12 @@ public class User {
     @Override
     public int hashCode () {
         return Objects.hash(mUsername);
+    }
+
+    @Override
+    public String toString () {
+        return "User{" +
+                "mUsername='" + mUsername + '\'' +
+                '}';
     }
 }
