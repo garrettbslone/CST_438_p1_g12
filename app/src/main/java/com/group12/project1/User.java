@@ -12,6 +12,7 @@ import androidx.room.PrimaryKey;
 import com.group12.project1.db.AppDAO;
 import com.group12.project1.db.AppDatabase;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -140,6 +141,18 @@ public class User {
         }
 
         return this;
+    }
+
+    public void rmJob(String jobId,AppDAO dao){
+        savedJobs.remove(jobId);
+        dao.update(this);
+    }
+
+    public void addJob(String jobId,AppDAO dao){
+        if(savedJobs==null)
+            savedJobs = new ArrayList<>();
+        savedJobs.add(jobId);
+        dao.update(this);
     }
 
     @Override

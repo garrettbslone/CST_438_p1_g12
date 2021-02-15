@@ -17,7 +17,7 @@
 
     <!--Create Account-->
     <string name="confirm_password_str">Confirm Password</string>
-  
+
     <!--Admin-->
     <string name="admin">Admin</string>
     <string name="view_edit_users">View/Edit Users</string>
@@ -30,6 +30,7 @@
     <string name="yes_str">Yes</string>
     <string name="no_str">No</string>
     <string name="save_str">Save</string>
+    <string name="saved_jobs">Saved Jobs</string>
     <string-array name="langs_arr">
         <item>python</item>
         <item>java</item>
