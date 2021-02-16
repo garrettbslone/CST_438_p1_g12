@@ -17,6 +17,8 @@ import retrofit2.Response;
 
 public class JobSearchActivity extends AppCompatActivity {
     private TextView tv;
+    private String infoStream; //added private string to carry information to activity.
+
 
     @Override
     protected void onCreate (Bundle savedInstanceState) {
@@ -25,6 +27,7 @@ public class JobSearchActivity extends AppCompatActivity {
 
         tv = findViewById(R.id.JobSearchTV);
         tv.setText("Searching...");
+
 
         // TODO: get the search params from user's profile
         search(new HashMap<>());
@@ -56,9 +59,10 @@ public class JobSearchActivity extends AppCompatActivity {
                     tv.setText("Job search failed + " + response.code());
                     return;
                 }
-
                 List<Job> jobs = response.body();
-                tv.setText(jobs.toString());
+
+                infoStream = jobs.toString();
+                displayJobs(infoStream);
             }
 
             @Override
@@ -68,4 +72,13 @@ public class JobSearchActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void displayJobs(String infoStream){
+
+        Intent info = new Intent(this, Results.class);
+        info.putExtra("JOB_API_DISPLAY", infoStream);
+        startActivity(info);
+
+    }
+
 }

@@ -3,6 +3,7 @@
     package="com.group12.project1">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Project1">
-        <activity android:name=".JobSearchActivity"></activity>
+        <activity android:name=".Results"></activity>
+        <activity android:name=".JobSearchActivity" />
         <activity android:name=".UserMainMenuActivity" />
         <activity android:name=".CreateAccountActivity" />
         <activity android:name=".MainActivity">
