@@ -32,15 +32,6 @@ public class UserMainMenuActivity extends AppCompatActivity {
         dao = Util.getDAO(this);
         mUser = getUser();
 
-        //TEST
-        mUser.setAdmin(true);
-        if(mUser.getSavedJobs()==null) {
-            mUser.addJob("79da435a-598c-43e6-a012-bfab1c841065", dao);
-            mUser.addJob("86c8ea47-ce0f-4a32-99e9-c6ece94e0516", dao);
-            mUser.addJob(" 1f21b777-6e99-483d-b3c2-d55b07654194", dao);
-        }
-        //TEST
-
         if (mUser.getSavedJobs() != null)
             SAVED_JOBS = Job.getJobsFromAPI(mUser.getSavedJobs());
 
