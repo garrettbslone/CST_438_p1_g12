@@ -77,6 +77,7 @@ public class EditAccountActivity extends AppCompatActivity implements AdapterVie
                 }
 
                 user.setPrefs(new SearchPreferences(mSelectedLang, loc, mFullTime));
+                dao.update(user);
                 startActivity(UserMainMenuActivity.intentFactory(getApplicationContext()));
             });
         }
