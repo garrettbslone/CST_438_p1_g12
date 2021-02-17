@@ -1,5 +1,14 @@
 package com.group12.project1;
 
+import android.util.Log;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 /**Job: POJO that saves the user and job information for later use.
  * Contributor: Jim Cabrera
  * */
@@ -123,6 +132,31 @@ public class Job {
                 ", Job title: " + title + '\'' +
                 ", Job description:" + description + '\'' +
                 '}';
+    }
+
+    public static List<Job> getJobsFromAPI(List<String> jobIds) {
+        List<Job> jobs = new ArrayList<>();
+        for (String jobId : jobIds) {
+            GitHubJobsAPI api = Util.getAPI();
+            Call<Job> call = api.getJob(jobId);
+            call.enqueue(new Callback<Job>() {
+                @Override
+                public void onResponse(Call<Job> call, Response<Job> response) {
+                    if (!response.isSuccessful()) {
+                        Log.e("HTTP Call fail", response.code() + ": " + response.message());
+                        return;
+                    }
+                    Job job = response.body();
+                    jobs.add(job);
+                }
+
+                @Override
+                public void onFailure(Call<Job> call, Throwable t) {
+                    Log.e("HTTP Call fail", t.getMessage());
+                }
+            });
+        }
+        return jobs;
     }
 }
 

@@ -39,7 +39,7 @@ public class AdminActivity extends AppCompatActivity {
         mUsers = mAppDAO.getAllUsers();
 
         mJobIds = getJobIds(mUsers);
-        JOBS = getJobsFromAPI(mJobIds);
+        JOBS = Job.getJobsFromAPI(mJobIds);
 
         mSavedJobs = findViewById(R.id.buttonAdminSavedJobs);
         mEditUsersBtn = findViewById(R.id.buttonEditUsers);
@@ -76,35 +76,6 @@ public class AdminActivity extends AppCompatActivity {
         return jobIds;
     }
 
-    /**
-     * Takes a list of user Ids and returns a list of jobs from API
-     * @param jobIds List of jobIds to be fed to API
-     * @return  List of objects of type User
-     */
-    public List<Job> getJobsFromAPI(List<String> jobIds){
-        List <Job> jobs = new ArrayList<>();
-        for(String jobId : jobIds) {
-            GitHubJobsAPI api = Util.getAPI();
-            Call<Job> call = api.getJob(jobId);
-            call.enqueue(new Callback<Job>() {
-                @Override
-                public void onResponse(Call<Job> call, Response<Job> response) {
-                    if (!response.isSuccessful()) {
-                        Log.e("HTTP Call fail", response.code() + ": " + response.message());
-                        return;
-                    }
-                    Job job = response.body();
-                    jobs.add(job);
-                }
-
-                @Override
-                public void onFailure(Call<Job> call, Throwable t) {
-                    Log.e("HTTP Call fail", t.getMessage());
-                }
-            });
-        }
-        return jobs;
-    }
     /**
      * Factory pattern provided Intent to switch to this activity.
      * @param ctx the Context to switch from
