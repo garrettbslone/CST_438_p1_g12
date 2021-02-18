@@ -61,18 +61,21 @@ public class CreateAccountActivity extends AppCompatActivity {
 
             if (!usernameIsValid(username)) {
                 mUsernameEt.setBackgroundColor(Color.RED);
+                return;
             } else  {
                 mUsernameEt.setBackgroundColor(Color.WHITE);
             }
 
             if (!passwordIsValid(password)) {
                 mPasswordEt.setBackgroundColor(Color.RED);
+                return;
             } else  {
                 mPasswordEt.setBackgroundColor(Color.WHITE);
             }
 
             if (!password.equals(confPassword)) {
                 mConfPasswordEt.setBackgroundColor(Color.RED);
+                return;
             } else  {
                 mConfPasswordEt.setBackgroundColor(Color.WHITE);
             }

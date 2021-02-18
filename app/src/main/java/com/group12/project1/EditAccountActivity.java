@@ -103,6 +103,8 @@ public class EditAccountActivity extends AppCompatActivity implements AdapterVie
 
             mLocEt.setText(prefs.getLoc());
             mTimeSw.setChecked(prefs.isFullTime());
+        } else {
+            mFullTime = true;
         }
     }
 
