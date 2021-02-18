@@ -12,11 +12,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Project1">
         <activity android:name=".SavedJobsActivity"></activity>
-        <activity android:name=".UserEditAccountActivity" />
-        <activity android:name=".RecommendedJobsActivity" />
+        <activity android:name=".CreateAccountActivity" />
+        <activity android:name=".AdminActivity" />
+        <activity android:name=".EditUsersActivity" />
         <activity android:name=".JobSearchActivity" />
         <activity android:name=".UserMainMenuActivity" />
-        <activity android:name=".CreateAccountActivity" />
+        <activity android:name=".AdminSavedJobsActivity" />
+        <activity android:name=".EditAccountActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

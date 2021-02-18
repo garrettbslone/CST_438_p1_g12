@@ -14,16 +14,35 @@
     <string name="MenuSearchBtn">Search Jobs</string>
     <string name="RecommendBtn">Recommended Jobs</string>
     <string name="EditAccBtn">Edit Account</string>
-    <string name="AdminMenuTitle">Admin</string>
-    <string name="AdminUsersBtn">Users</string>
-    <string name="AdminAddJobBtn">Add Jobs</string>
-
-    <!--Recommended Jobs -->
-    <string name="recommended_jobs_title">Recommended Jobs</string>
-    <string name="SearchBtn">Search</string>
-    <string name="SearchET">Search Jobs</string>
-    <string name="SearchJobsTitle">Search Jobs</string>
 
     <!--Create Account-->
     <string name="confirm_password_str">Confirm Password</string>
+
+    <!--Admin-->
+    <string name="admin">Admin</string>
+    <string name="view_edit_users">View/Edit Users</string>
+    <string name="view_saved_jobs">View Saved Jobs</string>
+
+    <!--Edit Account-->
+    <string name="lang_str">Language</string>
+    <string name="loc_str">Location</string>
+    <string name="full_time_str">Full Time</string>
+    <string name="yes_str">Yes</string>
+    <string name="no_str">No</string>
+    <string name="save_str">Save</string>
+    <string name="saved_jobs">Saved Jobs</string>
+    <string-array name="langs_arr">
+        <item>python</item>
+        <item>java</item>
+        <item>ruby</item>
+        <item>js</item>
+        <item>node</item>
+        <item>c</item>
+        <item>c#</item>
+        <item>php</item>
+        <item>lua</item>
+        <item>julia</item>
+        <item>fortran</item>
+        <item>cobol</item>
+    </string-array>
 </resources>

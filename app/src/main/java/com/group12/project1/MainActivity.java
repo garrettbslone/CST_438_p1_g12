@@ -1,87 +1,51 @@
 package com.group12.project1;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
 
-import android.content.Intent;
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import com.group12.project1.db.AppDAO;
 
 public class MainActivity extends AppCompatActivity {
-
-    private EditText mUsername;
-    private EditText mPassword;
-
-    private Button mlogin;
     private Button mCreateAccBtn;
-
-    private AppDAO mAppDAO;
 
     @Override
     protected void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // go to the main menu if they are signed in
+        if (this.resume()) {
+            startActivity(UserMainMenuActivity.intentFactory(getApplicationContext()));
+        }
+
         mCreateAccBtn = findViewById(R.id.CreateAccBtn);
 
         mCreateAccBtn.setOnClickListener(v -> {
             startActivity(CreateAccountActivity.intentFactory(getApplicationContext()));
         });
-
-        mUsername = findViewById(R.id.MainUsernameET);
-        mPassword= findViewById(R.id.MainPasswordET);
-
-        mlogin = findViewById(R.id.LogInBtn);
-        mlogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view){
-
-                User currentUser = verifyLogin();
-                if(currentUser.equals(null) ){
-
-                    mUsername.setText(null);
-                    mPassword.setText(null);
-
-                    Toast toast = Toast.makeText(getApplicationContext(), "Incorrect Username or Password", Toast.LENGTH_SHORT);
-                    toast.show();
-
-                }else{
-
-                    String username = currentUser.getUsername();
-                    Intent intent = new Intent(MainActivity.this, UserMainMenuActivity.class);
-                    intent.putExtra("username", username);
-                    startActivity(intent);
-
-                }
-            }
-        });
     }
 
-    private User verifyLogin(){
+    /**
+     * Check a see if a User is still signed in or not and register the object
+     * associated with them if they are.
+     * @return a boolean representing whether or not a user is signed in
+     */
+    @SuppressLint ("CommitPrefEdits")
+    private boolean resume() {
+        SharedPreferences sharedPrefs = getSharedPreferences(User.PREFS_TBL_NAME, Context.MODE_PRIVATE);
+        AppDAO dao = Util.getDAO(getApplicationContext());
 
-        mAppDAO = Util.getDAO(this);
-        String username = mUsername.getText().toString();
-        String password = mPassword.getText().toString();
-
-        User user = mAppDAO.getUserByUsername(username);
-
-        if(user == null)
-        {
-            return null;
+        User user;
+        if ((user = User.getSignedInUser(sharedPrefs, dao)) != null) {
+            user.signIn(sharedPrefs.edit());
+            return true;
         }
 
-        String truePassword = user.getPassword();
-        if(truePassword.equals(password))
-        {
-            return user;
-        }
-
-        return null;
+        return false;
     }
-
 }
