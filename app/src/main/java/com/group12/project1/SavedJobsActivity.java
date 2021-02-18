@@ -2,7 +2,6 @@ package com.group12.project1;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
 
 import android.content.Context;
 import android.content.DialogInterface;

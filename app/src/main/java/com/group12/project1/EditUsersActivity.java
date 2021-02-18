@@ -12,8 +12,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import androidx.appcompat.widget.SearchView;
-
 import android.widget.Toast;
 
 import com.group12.project1.db.AppDAO;
@@ -24,7 +22,6 @@ public class EditUsersActivity extends AppCompatActivity {
     private List<User> mUsers;
     private String[] mNamesArr;
     private AppDAO mAppDAO;
-    private SearchView mSearchView;
     private ListView mListView;
     private ArrayAdapter<String> mArrayAdapter;
 
@@ -39,7 +36,6 @@ public class EditUsersActivity extends AppCompatActivity {
         mAppDAO = Util.getDAO(this);
         mUsers = mAppDAO.getAllUsers();
         getNames();
-        mSearchView = findViewById(R.id.search_bar);
         mListView = findViewById(R.id.list_item);
 
         mArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, mNamesArr);
