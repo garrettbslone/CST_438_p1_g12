@@ -12,8 +12,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import androidx.appcompat.widget.SearchView;
-
 import android.widget.Toast;
 
 import com.group12.project1.db.AppDAO;
@@ -24,7 +22,6 @@ public class EditUsersActivity extends AppCompatActivity {
     private List<User> mUsers;
     private String[] mNamesArr;
     private AppDAO mAppDAO;
-    private SearchView mSearchView;
     private ListView mListView;
     private ArrayAdapter<String> mArrayAdapter;
 
@@ -39,7 +36,6 @@ public class EditUsersActivity extends AppCompatActivity {
         mAppDAO = Util.getDAO(this);
         mUsers = mAppDAO.getAllUsers();
         getNames();
-        mSearchView = findViewById(R.id.search_bar);
         mListView = findViewById(R.id.list_item);
 
         mArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, mNamesArr);
@@ -48,14 +44,13 @@ public class EditUsersActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 User user = mAppDAO.getUserByUsername(adapterView.getItemAtPosition(i).toString());
-                String admin = "";
+                String msg = getUserInfo(user);
                 String text = "Make Admin";
                 if (user.isAdmin()) {
-                    admin = "Admin";
                     text = "Remove Admin";
                 }
                 AlertDialog.Builder builder = new AlertDialog.Builder(EditUsersActivity.this);
-                builder.setMessage("password: " + user.getPassword() + "\n" + admin + "\n\n").setCancelable(true)
+                builder.setMessage(msg).setCancelable(true)
                         .setPositiveButton(text, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
@@ -106,5 +101,22 @@ public class EditUsersActivity extends AppCompatActivity {
         for (int i = 0; i < mUsers.size(); i++) {
             mNamesArr[i] = mUsers.get(i).getUsername();
         }
+    }
+
+    private String getUserInfo(User user){
+        String msg;
+        SearchPreferences sp = user.getPrefs();
+
+        if(user.isAdmin())
+                msg="Admin\n"+"Password: "+user.getPassword()+"\n";
+        else
+            msg = "User\n"+"Password: "+user.getPassword()+"\n";
+        if(sp!=null)
+            msg+=(
+                    "Language: "+sp.getLang()+"\n"+
+                    "Location: "+sp.getLoc()+"\n"+
+                    "Full-time: "+sp.isFullTime()
+                    );
+        return msg;
     }
 }
