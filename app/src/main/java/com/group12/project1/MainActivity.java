@@ -4,13 +4,21 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.group12.project1.db.AppDAO;
 
 public class MainActivity extends AppCompatActivity {
+
+    EditText mUsername;
+    EditText mPassword;
+
+    private Button loginBtn;
     private Button mCreateAccBtn;
 
     @Override
@@ -22,6 +30,23 @@ public class MainActivity extends AppCompatActivity {
         if (this.resume()) {
             startActivity(UserMainMenuActivity.intentFactory(getApplicationContext()));
         }
+
+        mUsername = findViewById(R.id.MainUsernameET);
+        mPassword= findViewById(R.id.MainPasswordET);
+        loginBtn = findViewById(R.id.LogInBtn);
+
+        loginBtn.setOnClickListener(view -> {
+                String username = mUsername.getText().toString();
+                String password = mPassword.getText().toString();
+
+                if(verifyLogin(username,password)){
+                    startActivity(UserMainMenuActivity.intentFactory((getApplicationContext())));
+                }
+                else{
+                    Util.toastMaker(this, "Try Again");
+                }
+
+        });
 
         mCreateAccBtn = findViewById(R.id.CreateAccBtn);
 
@@ -47,5 +72,34 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return false;
+    }
+
+    public static Intent intentFactory(Context ctx) {
+        Intent intent = new Intent(ctx, MainActivity.class);
+        return intent;
+    }
+
+     private boolean verifyLogin(String username, String password){
+        AppDAO dao = Util.getDAO(getApplicationContext());
+        SharedPreferences sharedPrefs = getSharedPreferences(User.PREFS_TBL_NAME, Context.MODE_PRIVATE);
+        User user = dao.getUserByUsername(username);
+
+        if(user == null){
+            Util.toastMaker(this, "Invalid Username").show();
+            mUsername.setText(null);
+            mPassword.setText(null);
+            return false;
+        }
+
+        String truePassword = user.getPassword();
+        if(truePassword.equals(password)){
+            user.signIn(sharedPrefs.edit());
+            return true;
+        }
+        else{
+            Util.toastMaker(this, "Invalid Password").show();
+            mPassword.setText(null);
+            return false;
+        }
     }
 }

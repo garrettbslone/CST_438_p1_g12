@@ -45,4 +45,7 @@
         <item>fortran</item>
         <item>cobol</item>
     </string-array>
+
+    <!---Recommended Jobs -->
+    <string name = "recommended_jobs_title">Recommended Jobs</string>
 </resources>

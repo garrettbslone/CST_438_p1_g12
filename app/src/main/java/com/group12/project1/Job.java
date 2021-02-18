@@ -158,16 +158,5 @@ public class Job {
         }
         return jobs;
     }
-
-    @Override
-    public String toString() {
-        return  "company: "+ company + "\n" +
-                "company url: " + company_url + "\n" +
-                "location: " + location + "\n" +
-                "title:" + title + "\n" +
-                "description:" + description + "\n" +
-                "how to apply:" + how_to_apply + "\n" +
-                "---------------------";
-    }
 }
 
