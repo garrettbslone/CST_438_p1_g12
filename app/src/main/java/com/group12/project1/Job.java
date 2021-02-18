@@ -121,16 +121,13 @@ public class Job {
 
     @Override
     public String toString() {
-        return "Job{" +
-                ", Id: " + id + '\'' +
-                ", Type: " + type + '\'' +
-                ", Url: " + url + '\'' +
-                ", Created_at: " + created_at + '\'' +
-                ", Company name: " + company + '\'' +
-                ", Company url: " + company_url + '\'' +
-                ", Location: " + location + '\'' +
-                ", Job title: " + title + '\'' +
-                ", Job description:" + description + '\'' +
+        return  "company: "+ company + "\n" +
+                "company url: " + company_url + "\n" +
+                "location: " + location + "\n" +
+                "title:" + title + "\n" +
+                "description:" + description + "\n" +
+                "how to apply:" + how_to_apply + "\n" +
+                "---------------------";
                 '}';
     }
 
