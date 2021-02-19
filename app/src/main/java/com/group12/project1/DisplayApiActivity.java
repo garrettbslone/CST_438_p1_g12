@@ -19,7 +19,7 @@ import com.group12.project1.db.AppDAO;
 
 import java.util.List;
 
-public class SavedJobsActivity extends AppCompatActivity {
+public class DisplayApiActivity extends AppCompatActivity {
     private String[] mJobNamesArr;
     private AppDAO mAppDAO;
     private ListView mListView;
@@ -29,14 +29,20 @@ public class SavedJobsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_saved_jobs);
-
+        setContentView(R.layout.activity_display_api);
         wireDisplay();
+
     }
 
     public void wireDisplay() {
         mAppDAO = Util.getDAO(this);
-        mJobs = UserMainMenuActivity.SAVED_JOBS;
+        if(EditAccountActivity.IS_SEARCH) {
+            mJobs = EditAccountActivity.JOBS;
+
+        }
+        else
+            mJobs = UserMainMenuActivity.RECOMMENDED_JOBS;
+        Toast.makeText(this, mJobs.size()+" Found",Toast.LENGTH_SHORT).show();
         mUser = getUser();
         mJobNamesArr = getJobNames(mJobs);
         mListView = findViewById(R.id.list_item);
@@ -52,7 +58,7 @@ public class SavedJobsActivity extends AppCompatActivity {
                         message = getJobInfo(job);
                     }
                 }
-                AlertDialog.Builder builder = new AlertDialog.Builder(SavedJobsActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(DisplayApiActivity.this);
                 builder.setMessage(message).setCancelable(false)
                         .setPositiveButton("Close", new DialogInterface.OnClickListener() {
                             @Override
@@ -60,16 +66,20 @@ public class SavedJobsActivity extends AppCompatActivity {
                                 dialogInterface.cancel();
                             }
                         })
-                        .setNegativeButton("Delete", new DialogInterface.OnClickListener() {
+                        .setNegativeButton("Save", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 for (Job job : mJobs) {
                                     if (job.getCompany().equals(name)) {
-                                        mUser.rmJob(job.getId(), mAppDAO);
-                                        dialog.cancel();
-                                        Toast.makeText(SavedJobsActivity.this, name + " removed", Toast.LENGTH_SHORT).show();
-                                        UserMainMenuActivity.updateJobs(mUser.getSavedJobs());
-                                        onBackPressed();
+                                        if(!mUser.getSavedJobs().contains(job.getId())) {
+                                            mUser.addJob(job.getId(), mAppDAO);
+                                            Toast.makeText(DisplayApiActivity.this, name + " added", Toast.LENGTH_SHORT).show();
+                                            UserMainMenuActivity.updateJobs(mUser.getSavedJobs());
+                                        }else{
+                                            Toast.makeText(DisplayApiActivity.this, name + " is already saved", Toast.LENGTH_SHORT).show();
+                                        }
+
+
                                     }
                                 }
                             }
@@ -111,7 +121,7 @@ public class SavedJobsActivity extends AppCompatActivity {
      * @return    the Intent to switch to this activity
      */
     public static Intent intentFactory(Context ctx) {
-        Intent intent = new Intent(ctx, SavedJobsActivity.class);
+        Intent intent = new Intent(ctx, DisplayApiActivity.class);
         return intent;
     }
 

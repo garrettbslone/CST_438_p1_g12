@@ -4,9 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
+
+import com.group12.project1.db.AppDAO;
 
 import java.util.HashMap;
 import java.util.List;
@@ -17,17 +20,18 @@ import retrofit2.Response;
 
 public class JobSearchActivity extends AppCompatActivity {
     private TextView tv;
-
+    private AppDAO mAppDAO;
     @Override
     protected void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_job_search);
-
         tv = findViewById(R.id.JobSearchTV);
         tv.setText("Searching...");
+        User user = getUser();
+        SearchPreferences prefs= user.getPrefs();
 
         // TODO: get the search params from user's profile
-        search(new HashMap<>());
+        search(prefs.toQueryMap());
     }
 
     /**
@@ -67,5 +71,11 @@ public class JobSearchActivity extends AppCompatActivity {
                 tv.setText("Failure: " + t.getMessage() + "\n" + t.getLocalizedMessage());
             }
         });
+    }
+
+    public User getUser() {
+        SharedPreferences sharedPrefs = getSharedPreferences(User.PREFS_TBL_NAME, Context.MODE_PRIVATE);
+
+        return User.getSignedInUser(sharedPrefs, mAppDAO);
     }
 }
