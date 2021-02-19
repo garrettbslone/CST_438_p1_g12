@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -15,12 +16,22 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.group12.project1.db.AppDAO;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class EditAccountActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private static final String BASE_MSG = "Edit Account \n";
-
+    public static boolean IS_SEARCH;
+    public static List<Job> JOBS = new ArrayList<>();
     // possible languages for the spinner
     private String[] mLangsArr;
     private String mSelectedLang;
@@ -31,12 +42,15 @@ public class EditAccountActivity extends AppCompatActivity implements AdapterVie
     private EditText mLocEt;
     private Switch mTimeSw;
     private Button mSaveBtn;
+    private SearchPreferences mPrefs;
+
+
 
     @Override
     protected void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_account);
-
+        mPrefs = new SearchPreferences("", "", true);
         mNameTv = findViewById(R.id.EditAccNameTV);
         mLangSp = findViewById(R.id.EditAccLangSP);
         mLocEt = findViewById(R.id.EditAccLocET);
@@ -54,8 +68,12 @@ public class EditAccountActivity extends AppCompatActivity implements AdapterVie
         if (user == null) {
             mNameTv.setText("Error: couldn't get user details");
         } else {
-            autofillPrefs(user);
 
+            autofillPrefs(user);
+            if(IS_SEARCH) {
+                mSaveBtn.setText("Search");
+                mLocEt.setText("");
+            }
             mTimeSw.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 if (isChecked) {
                     mTimeSw.setText(R.string.yes_str);
@@ -68,17 +86,25 @@ public class EditAccountActivity extends AppCompatActivity implements AdapterVie
 
             mSaveBtn.setOnClickListener(v -> {
                 String loc = mLocEt.getText().toString().trim();
-
-                if (loc.isEmpty()) {
-                    mLocEt.setBackgroundColor(Color.RED);
-                    return;
-                } else {
-                    mLocEt.setBackgroundColor(Color.WHITE);
+                if(!IS_SEARCH) {
+                    if (loc.isEmpty()) {
+                        mLocEt.setBackgroundColor(Color.RED);
+                        return;
+                    } else {
+                        mLocEt.setBackgroundColor(Color.WHITE);
+                    }
                 }
 
-                user.setPrefs(new SearchPreferences(mSelectedLang, loc, mFullTime));
-                dao.update(user);
-                startActivity(UserMainMenuActivity.intentFactory(getApplicationContext()));
+                if(IS_SEARCH) {
+                    mPrefs = new SearchPreferences(mSelectedLang, loc, mFullTime);
+                    Toast.makeText(EditAccountActivity.this, "Searching...",Toast.LENGTH_SHORT).show();
+                    search(mPrefs.toQueryMap());
+
+                }else {
+                    user.setPrefs(new SearchPreferences(mSelectedLang, loc, mFullTime));
+                    dao.update(user);
+                    startActivity(UserMainMenuActivity.intentFactory(getApplicationContext()));
+                }
             });
         }
     }
@@ -89,7 +115,10 @@ public class EditAccountActivity extends AppCompatActivity implements AdapterVie
      * @param user the User who is editing their preferences
      */
     private void autofillPrefs (User user) {
-        mNameTv.setText(BASE_MSG + user.getUsername());
+        if(!IS_SEARCH)
+            mNameTv.setText(BASE_MSG + user.getUsername());
+        else
+            mNameTv.setText("SEARCH");
         fillSpinner();
 
         SearchPreferences prefs = user.getPrefs();
@@ -140,5 +169,34 @@ public class EditAccountActivity extends AppCompatActivity implements AdapterVie
     public static Intent intentFactory(Context ctx) {
         Intent intent = new Intent(ctx, EditAccountActivity.class);
         return intent;
+    }
+
+    public static void setSearch(boolean bool){
+        IS_SEARCH = bool;
+    }
+    /**
+     * Search for Jobs using the GitHub jobs api.
+     * @param params a HashMap of Strings representing the query parameters
+     */
+    public void search(HashMap<String, String> params) {
+        GitHubJobsAPI api = Util.getAPI();
+        Call<List<Job>> call = api.searchJobs(params);
+
+        call.enqueue(new Callback<List<Job>>() {
+            @Override
+            public void onResponse (Call<List<Job>> call, Response<List<Job>> response) {
+                if (!response.isSuccessful()) {
+                    Log.e("HTTP Call fail", response.code() + ": " + response.message());
+                    return;
+                }
+                JOBS = response.body();
+                startActivity(DisplayApiActivity.intentFactory(EditAccountActivity.this));
+            }
+
+            @Override
+            public void onFailure (Call<List<Job>> call, Throwable t) {
+                Log.e("HTTP Call fail", t.getMessage());
+            }
+        });
     }
 }
