@@ -46,6 +46,7 @@ public class User {
         this.mPassword = mPassword;
         this.mAdmin = mAdmin;
         this.mPrefs = null;
+        this.savedJobs = new ArrayList<>();
     }
 
     public List<String> getSavedJobs() {
@@ -149,8 +150,6 @@ public class User {
     }
 
     public void addJob(String jobId,AppDAO dao){
-        if(savedJobs==null)
-            savedJobs = new ArrayList<>();
         savedJobs.add(jobId);
         dao.update(this);
     }
