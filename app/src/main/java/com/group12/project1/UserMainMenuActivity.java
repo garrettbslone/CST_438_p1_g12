@@ -20,6 +20,7 @@ public class UserMainMenuActivity extends AppCompatActivity {
     private Button mEditAccBtn;
     private Button mAdminBtn;
     private Button mSavedJobsBtn;
+    private Button mLogOutBtn;
     private User mUser;
     public static List<Job> SAVED_JOBS;
     private AppDAO dao;
@@ -40,6 +41,8 @@ public class UserMainMenuActivity extends AppCompatActivity {
         mEditAccBtn = findViewById(R.id.EditAccBtn);
         mAdminBtn = findViewById(R.id.AdminBtn);
         mSavedJobsBtn = findViewById(R.id.SavedJobsBtn);
+        mLogOutBtn = findViewById(R.id.LogOutBtn1);
+
 
         mMenuSearchBtn.setOnClickListener(v -> {
             startActivity(JobSearchActivity.intentFactory(getApplicationContext()));
@@ -57,6 +60,12 @@ public class UserMainMenuActivity extends AppCompatActivity {
             mAdminBtn.setVisibility(View.VISIBLE);
         mAdminBtn.setOnClickListener(v -> {
             startActivity(AdminActivity.intentFactory(this));
+        });
+
+        mLogOutBtn.setOnClickListener(view -> {
+            SharedPreferences sharedPrefs = getSharedPreferences(User.PREFS_TBL_NAME, Context.MODE_PRIVATE);
+            mUser.signOut(sharedPrefs.edit());
+            startActivity(MainActivity.intentFactory(this));
         });
     }
 
@@ -80,5 +89,4 @@ public class UserMainMenuActivity extends AppCompatActivity {
 
         return User.getSignedInUser(sharedPrefs, dao);
     }
-
 }
