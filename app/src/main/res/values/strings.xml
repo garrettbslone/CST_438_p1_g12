@@ -15,8 +15,6 @@
     <string name="RecommendBtn">Recommended Jobs</string>
     <string name="EditAccBtn">Edit Account</string>
 
-    <string name="recommended_jobs_title">Recommeded Jobs</string>
-
     <!--Create Account-->
     <string name="confirm_password_str">Confirm Password</string>
 
@@ -49,5 +47,5 @@
     </string-array>
 
     <!---Recommended Jobs -->
-    <string name = "recommended_jobs_title">Recommended Jobs</string>
+    <string name="recommended_jobs_title">Recommended Jobs</string>
 </resources>

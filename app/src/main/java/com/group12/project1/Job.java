@@ -125,10 +125,8 @@ public class Job {
                 "company url: " + company_url + "\n" +
                 "location: " + location + "\n" +
                 "title:" + title + "\n" +
-                "description:" + description + "\n" +
-                "how to apply:" + how_to_apply + "\n" +
+                "description:" + description + "\n"+
                 "---------------------";
-                '}';
     }
 
     public static List<Job> getJobsFromAPI(List<String> jobIds) {
