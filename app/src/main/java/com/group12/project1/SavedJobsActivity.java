@@ -7,11 +7,14 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -24,7 +27,7 @@ public class SavedJobsActivity extends AppCompatActivity {
     private String[] mJobNamesArr;
     private AppDAO mAppDAO;
     private ListView mListView;
-    private ArrayAdapter<String> mArrayAdapter;
+    private JobAdapter mArrayAdapter;
     private List<Job> mJobs;
     private User mUser;
     @Override
@@ -41,7 +44,7 @@ public class SavedJobsActivity extends AppCompatActivity {
         mUser = getUser();
         mJobNamesArr = getJobNames(mJobs);
         mListView = findViewById(R.id.list_item);
-        mArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, mJobNamesArr);
+        mArrayAdapter = new JobAdapter(this, mJobs);
         mListView.setAdapter(mArrayAdapter);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -121,4 +124,23 @@ public class SavedJobsActivity extends AppCompatActivity {
 
         return User.getSignedInUser(sharedPrefs, mAppDAO);
     }
+
+    public void applyToJob(View view){
+
+        LinearLayout parentRow = (LinearLayout) view.getParent();
+        String name = parentRow.findViewById(R.id.ListItemText).toString();
+
+        String URL = "";
+        for (Job job : mJobs) {
+            if (job.getCompany().equals(name)) {
+                URL = job.getUrl();
+            }
+        }
+
+        Intent viewIntent =
+                new Intent("android.intent.action.VIEW",
+                        Uri.parse(URL));
+        startActivity(viewIntent);
+    }
+
 }

@@ -48,4 +48,5 @@
 
     <!---Recommended Jobs -->
     <string name="recommended_jobs_title">Recommended Jobs</string>
+    <string name="applybtn">Apply</string>
 </resources>
