@@ -81,4 +81,9 @@ public class UserMainMenuActivity extends AppCompatActivity {
         return User.getSignedInUser(sharedPrefs, dao);
     }
 
+    @Override
+    public void onBackPressed() {
+      return;
+    }
+
 }
